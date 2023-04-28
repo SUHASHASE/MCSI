@@ -1,0 +1,484 @@
+
+1).activity_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_weight="1"
+        android:background="@color/cardview_dark_background"
+        android:inputType="textPersonName"
+        android:gravity="right|center"
+        android:textSize="40pt"
+        android:textColor="@color/white"
+        android:text="0"
+        />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="0pt">
+
+            <Button
+                android:id="@+id/buAC"
+                android:layout_width="30pt"
+                android:layout_height="30pt"
+                android:layout_margin="1pt"
+                android:layout_weight="1"
+                android:onClick="acEvent"
+                android:text="AC"
+                android:textColor="@color/purple_200"
+                android:textSize="10pt">
+            </Button>
+
+
+<Button
+        android:id="@+id/buPlusMinus"
+        android:textSize="10pt"
+        android:onClick="numberEvent"
+        android:layout_width="30pt"
+        android:layout_height="30pt"
+        android:layout_margin="1pt"
+        android:layout_weight="1"
+        android:textColor="@color/purple_200"
+        android:text="+/-">
+    </Button>
+
+    <Button
+        android:id="@+id/buDivide"
+        android:textSize="10pt"
+        android:onClick="operatorEvent"
+        android:layout_width="30pt"
+        android:layout_height="30pt"
+        android:layout_margin="1pt"
+        android:layout_weight="1"
+        android:textColor="@color/purple_200"
+        android:text="/">
+    </Button>
+
+    <Button
+        android:id="@+id/buMultiply"
+        android:textSize="10pt"
+        android:onClick="operatorEvent"
+        android:layout_width="30pt"
+        android:layout_height="30pt"
+        android:layout_margin="1pt"
+        android:layout_weight="1"
+        android:textColor="@color/purple_200"
+        android:text="*">
+    </Button>
+</TableRow>
+
+<TableRow
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="0pt">
+
+    <Button
+        android:id="@+id/bu7"
+        android:textSize="10pt"
+        android:onClick="numberEvent"
+        android:layout_width="30pt"
+        android:layout_height="30pt"
+        android:layout_margin="1pt"
+        android:layout_weight="1"
+        android:text="7">
+    </Button>
+
+    <Button
+        android:id="@+id/bu8"
+        android:textSize="10pt"
+        android:onClick="numberEvent"
+        android:layout_width="30pt"
+        android:layout_height="30pt"
+        android:layout_margin="1pt"
+        android:layout_weight="1"
+        android:text="8">
+    </Button>
+
+<Button
+                android:id="@+id/bu9"
+                android:textSize="10pt"
+                android:onClick="numberEvent"
+                android:layout_width="30pt"
+                android:layout_height="30pt"
+                android:layout_margin="1pt"
+                android:layout_weight="1"
+                android:text="9">
+            </Button>
+
+            <Button
+                android:id="@+id/buPercent"
+                android:textSize="10pt"
+                android:onClick="percentEvent"
+                android:layout_width="30pt"
+                android:layout_height="30pt"
+                android:layout_margin="1pt"
+                android:layout_weight="1"
+                android:textColor="@color/purple_200"
+                android:text="%">
+            </Button>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="0pt">
+
+            <Button
+                android:id="@+id/bu4"
+                android:textSize="10pt"
+                android:onClick="numberEvent"
+                android:layout_width="30pt"
+                android:layout_height="30pt"
+                android:layout_margin="1pt"
+                android:layout_weight="1"
+                android:text="4">
+            </Button>
+
+            <Button
+                android:id="@+id/bu5"
+                android:textSize="10pt"
+                android:onClick="numberEvent"
+                android:layout_width="30pt"
+                android:layout_height="30pt"
+                android:layout_margin="1pt"
+                android:layout_weight="1"
+                android:text="5">
+            </Button>
+
+            <Button
+                android:id="@+id/bu6"
+                android:textSize="10pt"
+                android:onClick="numberEvent"
+                android:layout_width="30pt"
+                android:layout_height="30pt"
+                android:layout_margin="1pt"
+                android:layout_weight="1"
+                android:text="6">
+            </Button>
+
+
+
+            <Button
+                android:id="@+id/buPlus"
+                android:textSize="10pt"
+                android:onClick="operatorEvent"
+                android:layout_width="30pt"
+                android:layout_height="30pt"
+                android:layout_margin="1pt"
+                android:layout_weight="1"
+                android:textColor="@color/purple_200"
+                android:text="+">
+            </Button>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="0pt">
+
+            <Button
+                android:id="@+id/bu1"
+                android:textSize="10pt"
+                android:onClick="numberEvent"
+                android:layout_width="30pt"
+                android:layout_height="30pt"
+                android:layout_margin="1pt"
+                android:layout_weight="1"
+                android:text="1">
+            </Button>
+
+            <Button
+                android:id="@+id/bu2"
+                android:onClick="numberEvent"
+                android:textSize="10pt"
+                android:layout_width="30pt"
+                android:layout_height="30pt"
+                android:layout_margin="1pt"
+                android:layout_weight="1"
+                android:text="2">
+            </Button>
+
+            <Button
+                android:id="@+id/bu3"
+                android:textSize="10pt"
+                android:onClick="numberEvent"
+                android:layout_width="30pt"
+                android:layout_height="30pt"
+                android:layout_margin="1pt"
+                android:layout_weight="1"
+                android:text="3">
+            </Button>
+
+            <Button
+                android:id="@+id/buMinus"
+                android:textSize="10pt"
+                android:onClick="operatorEvent"
+                android:layout_width="30pt"
+                android:layout_height="30pt"
+                android:layout_margin="1pt"
+                android:layout_weight="1"
+                android:textColor="@color/purple_200"
+                android:text="-">
+            </Button>
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="0pt">
+            
+
+
+	    <Button
+                android:id="@+id/bu0"
+                android:textSize="10pt"
+                android:onClick="numberEvent"
+                android:layout_width="30pt"
+                android:layout_height="30pt"
+                android:layout_margin="1pt"
+                android:layout_weight="2"
+                android:text="0">
+            </Button>
+            <Button
+                android:id="@+id/buDot"
+                android:textSize="10pt"
+                android:onClick="numberEvent"
+                android:layout_width="30pt"
+                android:layout_height="30pt"
+                android:layout_margin="1pt"
+                android:layout_weight="2"
+                android:text=".">
+            </Button>
+            <Button
+                android:id="@+id/buEqual"
+                android:textSize="10pt"
+                android:layout_width="45pt"
+                android:onClick="equalEvent"
+                android:layout_height="30pt"
+                android:layout_margin="1pt"
+                android:layout_weight="1"
+                android:textColor="@color/purple_200"
+                android:text="=">
+            </Button>
+        </TableRow>
+    </TableLayout>
+</LinearLayout>
+
+
+2). MainActivity.java calculater
+
+import android.app.*;
+import android.os.*;
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.Menu;
+import android.os.Bundle;
+import android.widget.*;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+public class MainActivity extends Activity 
+{
+	Button button0, button1, button2, button3, button4, button5, button6,
+	button7, button8, button9, buttonAdd, buttonSub, buttonDivision,
+	buttonMul, button10, buttonC, buttonEqual;
+    EditText spEditText;
+
+    float mValueOne, mValueTwo;
+
+    boolean Addition, Subtract, Multiplication, Division;
+	
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+		button0 = (Button) findViewById(R.id.button0);
+        button1 = (Button) findViewById(R.id.button1);
+        button2 = (Button) findViewById(R.id.button2);
+        button3 = (Button) findViewById(R.id.button3);
+        button4 = (Button) findViewById(R.id.button4);
+        button5 = (Button) findViewById(R.id.button5);
+        button6 = (Button) findViewById(R.id.button6);
+        button7 = (Button) findViewById(R.id.button7);
+        button8 = (Button) findViewById(R.id.button8);
+        button9 = (Button) findViewById(R.id.button9);
+        button10 = (Button) findViewById(R.id.button10);
+        buttonAdd = (Button) findViewById(R.id.buttonadd);
+        buttonSub = (Button) findViewById(R.id.buttonsub);
+        buttonMul = (Button) findViewById(R.id.buttonmul);
+        buttonDivision = (Button) findViewById(R.id.buttondiv);
+        buttonC = (Button) findViewById(R.id.buttonC);
+        buttonEqual = (Button) findViewById(R.id.buttoneql);
+        spEditText = (EditText) findViewById(R.id.edt1);
+
+
+        button1.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					spEditText.setText(spEditText.getText() + "1");
+				}
+			});
+
+        button2.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					spEditText.setText(spEditText.getText() + "2");
+				}
+			});
+
+        button3.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					spEditText.setText(spEditText.getText() + "3");
+				}
+			});
+
+        button4.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					spEditText.setText(spEditText.getText() + "4");
+				}
+			});
+
+        button5.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					spEditText.setText(spEditText.getText() + "5");
+				}
+			});
+
+        button6.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					spEditText.setText(spEditText.getText() + "6");
+				}
+			});
+
+        button7.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					spEditText.setText(spEditText.getText() + "7");
+				}
+			});
+
+        button8.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					spEditText.setText(spEditText.getText() + "8");
+				}
+			});
+
+        button9.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					spEditText.setText(spEditText.getText() + "9");
+				}
+			});
+
+        button0.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					spEditText.setText(spEditText.getText() + "0");
+				}
+			});
+
+        buttonAdd.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+
+					if (spEditText == null) {
+						spEditText.setText("");
+					} else {
+						mValueOne = Float.parseFloat(spEditText.getText() + "");
+						Addition = true;
+						spEditText.setText(null);
+					}
+				}
+			});
+
+        buttonSub.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					mValueOne = Float.parseFloat(spEditText.getText() + "");
+					Subtract = true;
+					spEditText.setText(null);
+				}
+			});
+
+        buttonMul.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					mValueOne = Float.parseFloat(spEditText.getText() + "");
+					Multiplication = true;
+					spEditText.setText(null);
+				}
+			});
+
+        buttonDivision.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					mValueOne = Float.parseFloat(spEditText.getText() + "");
+					Division = true;
+					spEditText.setText(null);
+				}
+			});
+
+        buttonEqual.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					mValueTwo = Float.parseFloat(spEditText.getText() + "");
+
+					if (Addition == true) {
+						spEditText.setText(mValueOne + mValueTwo + "");
+						Addition = false;
+					}
+
+					if (Subtract == true) {
+						spEditText.setText(mValueOne - mValueTwo + "");
+						Subtract = false;
+					}
+
+					if (Multiplication == true) {
+						spEditText.setText(mValueOne * mValueTwo + "");
+						Multiplication = false;
+					}
+
+					if (Division == true) {
+						spEditText.setText(mValueOne / mValueTwo + "");
+						Division = false;
+					}
+				}
+			});
+
+        buttonC.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					spEditText.setText("");
+				}
+			});
+
+        button10.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					spEditText.setText(spEditText.getText() + ".");
+				}
+			});
+    }
+}
+
