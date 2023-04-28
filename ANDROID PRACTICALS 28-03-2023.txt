@@ -1,0 +1,1750 @@
+
+
+Android practical 
+
+
+Q1).Create a Simple Application Which Shows Life Cycle of Activity
+
+<?xml version="1.0" encoding="utf-8"?>  
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"  
+    xmlns:app="http://schemas.android.com/apk/res-auto"  
+    xmlns:tools="http://schemas.android.com/tools"  
+    android:layout_width="match_parent"  
+    android:layout_height="match_parent"  
+    tools:context="example.javatpoint.com.activitylifecycle.MainActivity">  
+  
+    <TextView  
+        android:layout_width="wrap_content"  
+        android:layout_height="wrap_content"  
+        android:text="Hello World!"  
+        app:layout_constraintBottom_toBottomOf="parent"  
+        app:layout_constraintLeft_toLeftOf="parent"  
+        app:layout_constraintRight_toRightOf="parent"  
+        app:layout_constraintTop_toTopOf="parent" />  
+  
+</android.support.constraint.ConstraintLayout>
+
+.........
+package example.javatpoint.com.activitylifecycle;  
+  
+import android.app.Activity;  
+import android.os.Bundle;  
+import android.util.Log;  
+  
+public class MainActivity extends Activity {  
+  
+    @Override  
+    protected void onCreate(Bundle savedInstanceState) {  
+        super.onCreate(savedInstanceState);  
+        setContentView(R.layout.activity_main);  
+        Log.d("lifecycle","onCreate invoked");  
+    }  
+    @Override  
+    protected void onStart() {  
+        super.onStart();  
+        Log.d("lifecycle","onStart invoked");  
+    }  
+    @Override  
+    protected void onResume() {  
+        super.onResume();  
+        Log.d("lifecycle","onResume invoked");  
+    }  
+    @Override  
+    protected void onPause() {  
+
+        super.onPause();  
+        Log.d("lifecycle","onPause invoked");  
+    }  
+    @Override  
+    protected void onStop() {  
+        super.onStop();  
+        Log.d("lifecycle","onStop invoked");  
+    }  
+    @Override  
+    protected void onRestart() {  
+        super.onRestart();  
+        Log.d("lifecycle","onRestart invoked");  
+    }  
+    @Override  
+    protected void onDestroy() {  
+        super.onDestroy();  
+        Log.d("lifecycle","onDestroy invoked");  
+    }  
+}  
+
+
+
+
+
+
+
+
+Q.2 ) Create the simple calculator shown below also perform appropriate operation.
+
+1).activity_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_weight="1"
+        android:background="@color/cardview_dark_background"
+        android:inputType="textPersonName"
+        android:gravity="right|center"
+        android:textSize="40pt"
+        android:textColor="@color/white"
+        android:text="0"
+        />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="0pt">
+
+            <Button
+                android:id="@+id/buAC"
+                android:layout_width="30pt"
+                android:layout_height="30pt"
+                android:layout_margin="1pt"
+                android:layout_weight="1"
+                android:onClick="acEvent"
+                android:text="AC"
+                android:textColor="@color/purple_200"
+                android:textSize="10pt">
+            </Button>
+
+
+<Button
+        android:id="@+id/buPlusMinus"
+        android:textSize="10pt"
+        android:onClick="numberEvent"
+        android:layout_width="30pt"
+        android:layout_height="30pt"
+        android:layout_margin="1pt"
+        android:layout_weight="1"
+        android:textColor="@color/purple_200"
+        android:text="+/-">
+    </Button>
+
+    <Button
+        android:id="@+id/buDivide"
+        android:textSize="10pt"
+        android:onClick="operatorEvent"
+        android:layout_width="30pt"
+        android:layout_height="30pt"
+        android:layout_margin="1pt"
+        android:layout_weight="1"
+        android:textColor="@color/purple_200"
+        android:text="/">
+    </Button>
+
+    <Button
+        android:id="@+id/buMultiply"
+        android:textSize="10pt"
+        android:onClick="operatorEvent"
+        android:layout_width="30pt"
+        android:layout_height="30pt"
+        android:layout_margin="1pt"
+        android:layout_weight="1"
+        android:textColor="@color/purple_200"
+        android:text="*">
+    </Button>
+</TableRow>
+
+<TableRow
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="0pt">
+
+    <Button
+        android:id="@+id/bu7"
+        android:textSize="10pt"
+        android:onClick="numberEvent"
+        android:layout_width="30pt"
+        android:layout_height="30pt"
+        android:layout_margin="1pt"
+        android:layout_weight="1"
+        android:text="7">
+    </Button>
+
+    <Button
+        android:id="@+id/bu8"
+        android:textSize="10pt"
+        android:onClick="numberEvent"
+        android:layout_width="30pt"
+        android:layout_height="30pt"
+        android:layout_margin="1pt"
+        android:layout_weight="1"
+        android:text="8">
+    </Button>
+
+<Button
+                android:id="@+id/bu9"
+                android:textSize="10pt"
+                android:onClick="numberEvent"
+                android:layout_width="30pt"
+                android:layout_height="30pt"
+                android:layout_margin="1pt"
+                android:layout_weight="1"
+                android:text="9">
+            </Button>
+
+            <Button
+                android:id="@+id/buPercent"
+                android:textSize="10pt"
+                android:onClick="percentEvent"
+                android:layout_width="30pt"
+                android:layout_height="30pt"
+                android:layout_margin="1pt"
+                android:layout_weight="1"
+                android:textColor="@color/purple_200"
+                android:text="%">
+            </Button>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="0pt">
+
+            <Button
+                android:id="@+id/bu4"
+                android:textSize="10pt"
+                android:onClick="numberEvent"
+                android:layout_width="30pt"
+                android:layout_height="30pt"
+                android:layout_margin="1pt"
+                android:layout_weight="1"
+                android:text="4">
+            </Button>
+
+            <Button
+                android:id="@+id/bu5"
+                android:textSize="10pt"
+                android:onClick="numberEvent"
+                android:layout_width="30pt"
+                android:layout_height="30pt"
+                android:layout_margin="1pt"
+                android:layout_weight="1"
+                android:text="5">
+            </Button>
+
+            <Button
+                android:id="@+id/bu6"
+                android:textSize="10pt"
+                android:onClick="numberEvent"
+                android:layout_width="30pt"
+                android:layout_height="30pt"
+                android:layout_margin="1pt"
+                android:layout_weight="1"
+                android:text="6">
+            </Button>
+
+
+
+            <Button
+                android:id="@+id/buPlus"
+                android:textSize="10pt"
+                android:onClick="operatorEvent"
+                android:layout_width="30pt"
+                android:layout_height="30pt"
+                android:layout_margin="1pt"
+                android:layout_weight="1"
+                android:textColor="@color/purple_200"
+                android:text="+">
+            </Button>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="0pt">
+
+            <Button
+                android:id="@+id/bu1"
+                android:textSize="10pt"
+                android:onClick="numberEvent"
+                android:layout_width="30pt"
+                android:layout_height="30pt"
+                android:layout_margin="1pt"
+                android:layout_weight="1"
+                android:text="1">
+            </Button>
+
+            <Button
+                android:id="@+id/bu2"
+                android:onClick="numberEvent"
+                android:textSize="10pt"
+                android:layout_width="30pt"
+                android:layout_height="30pt"
+                android:layout_margin="1pt"
+                android:layout_weight="1"
+                android:text="2">
+            </Button>
+
+            <Button
+                android:id="@+id/bu3"
+                android:textSize="10pt"
+                android:onClick="numberEvent"
+                android:layout_width="30pt"
+                android:layout_height="30pt"
+                android:layout_margin="1pt"
+                android:layout_weight="1"
+                android:text="3">
+            </Button>
+
+            <Button
+                android:id="@+id/buMinus"
+                android:textSize="10pt"
+                android:onClick="operatorEvent"
+                android:layout_width="30pt"
+                android:layout_height="30pt"
+                android:layout_margin="1pt"
+                android:layout_weight="1"
+                android:textColor="@color/purple_200"
+                android:text="-">
+            </Button>
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="0pt">
+            
+
+
+	    <Button
+                android:id="@+id/bu0"
+                android:textSize="10pt"
+                android:onClick="numberEvent"
+                android:layout_width="30pt"
+                android:layout_height="30pt"
+                android:layout_margin="1pt"
+                android:layout_weight="2"
+                android:text="0">
+            </Button>
+            <Button
+                android:id="@+id/buDot"
+                android:textSize="10pt"
+                android:onClick="numberEvent"
+                android:layout_width="30pt"
+                android:layout_height="30pt"
+                android:layout_margin="1pt"
+                android:layout_weight="2"
+                android:text=".">
+            </Button>
+            <Button
+                android:id="@+id/buEqual"
+                android:textSize="10pt"
+                android:layout_width="45pt"
+                android:onClick="equalEvent"
+                android:layout_height="30pt"
+                android:layout_margin="1pt"
+                android:layout_weight="1"
+                android:textColor="@color/purple_200"
+                android:text="=">
+            </Button>
+        </TableRow>
+    </TableLayout>
+</LinearLayout>
+
+
+2). MainActivity.java calculater
+
+import android.app.*;
+import android.os.*;
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.Menu;
+import android.os.Bundle;
+import android.widget.*;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+public class MainActivity extends Activity 
+{
+	Button button0, button1, button2, button3, button4, button5, button6,
+	button7, button8, button9, buttonAdd, buttonSub, buttonDivision,
+	buttonMul, button10, buttonC, buttonEqual;
+    EditText spEditText;
+
+    float mValueOne, mValueTwo;
+
+    boolean Addition, Subtract, Multiplication, Division;
+	
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+		button0 = (Button) findViewById(R.id.button0);
+        button1 = (Button) findViewById(R.id.button1);
+        button2 = (Button) findViewById(R.id.button2);
+        button3 = (Button) findViewById(R.id.button3);
+        button4 = (Button) findViewById(R.id.button4);
+        button5 = (Button) findViewById(R.id.button5);
+        button6 = (Button) findViewById(R.id.button6);
+        button7 = (Button) findViewById(R.id.button7);
+        button8 = (Button) findViewById(R.id.button8);
+        button9 = (Button) findViewById(R.id.button9);
+        button10 = (Button) findViewById(R.id.button10);
+        buttonAdd = (Button) findViewById(R.id.buttonadd);
+        buttonSub = (Button) findViewById(R.id.buttonsub);
+        buttonMul = (Button) findViewById(R.id.buttonmul);
+        buttonDivision = (Button) findViewById(R.id.buttondiv);
+        buttonC = (Button) findViewById(R.id.buttonC);
+        buttonEqual = (Button) findViewById(R.id.buttoneql);
+        spEditText = (EditText) findViewById(R.id.edt1);
+
+
+        button1.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					spEditText.setText(spEditText.getText() + "1");
+				}
+			});
+
+        button2.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					spEditText.setText(spEditText.getText() + "2");
+				}
+			});
+
+        button3.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					spEditText.setText(spEditText.getText() + "3");
+				}
+			});
+
+        button4.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					spEditText.setText(spEditText.getText() + "4");
+				}
+			});
+
+        button5.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					spEditText.setText(spEditText.getText() + "5");
+				}
+			});
+
+        button6.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					spEditText.setText(spEditText.getText() + "6");
+				}
+			});
+
+        button7.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					spEditText.setText(spEditText.getText() + "7");
+				}
+			});
+
+        button8.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					spEditText.setText(spEditText.getText() + "8");
+				}
+			});
+
+        button9.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					spEditText.setText(spEditText.getText() + "9");
+				}
+			});
+
+        button0.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					spEditText.setText(spEditText.getText() + "0");
+				}
+			});
+
+        buttonAdd.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+
+					if (spEditText == null) {
+						spEditText.setText("");
+					} else {
+						mValueOne = Float.parseFloat(spEditText.getText() + "");
+						Addition = true;
+						spEditText.setText(null);
+					}
+				}
+			});
+
+        buttonSub.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					mValueOne = Float.parseFloat(spEditText.getText() + "");
+					Subtract = true;
+					spEditText.setText(null);
+				}
+			});
+
+        buttonMul.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					mValueOne = Float.parseFloat(spEditText.getText() + "");
+					Multiplication = true;
+					spEditText.setText(null);
+				}
+			});
+
+        buttonDivision.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					mValueOne = Float.parseFloat(spEditText.getText() + "");
+					Division = true;
+					spEditText.setText(null);
+				}
+			});
+
+        buttonEqual.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					mValueTwo = Float.parseFloat(spEditText.getText() + "");
+
+					if (Addition == true) {
+						spEditText.setText(mValueOne + mValueTwo + "");
+						Addition = false;
+					}
+
+					if (Subtract == true) {
+						spEditText.setText(mValueOne - mValueTwo + "");
+						Subtract = false;
+					}
+
+					if (Multiplication == true) {
+						spEditText.setText(mValueOne * mValueTwo + "");
+						Multiplication = false;
+					}
+
+					if (Division == true) {
+						spEditText.setText(mValueOne / mValueTwo + "");
+						Division = false;
+					}
+				}
+			});
+
+        buttonC.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					spEditText.setText("");
+				}
+			});
+
+        button10.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					spEditText.setText(spEditText.getText() + ".");
+				}
+			});
+    }
+}
+
+
+
+
+
+
+
+
+
+Q3).Create an  application that will change colour of the screen and change the font size of the text view using xml.
+
+1).Activity.xml file
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+	<TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:gravity="center"
+        android:text="WELCOME IN ANDROID PROGRAMMING!"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:text="Change font size"
+        android:textSize="25sp" />
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:text="Change color"
+        android:textSize="25sp"/>
+</LinearLayout>
+
+
+
+2.main.java colorfont
+
+package com.mycompany.myapp;
+
+import android.app.*;
+import android.os.*;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.graphics.Color;
+public class MainActivity extends Activity 
+{
+	int ch=1;
+    float font=30;
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+		final TextView t= (TextView) findViewById(R.id.textView);
+		Button b1= (Button) findViewById(R.id.button1);
+        b1.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					t.setTextSize(font);
+					font = font + 5;
+					if (font == 50)
+						font = 30;
+				}
+			});
+        Button b2= (Button) findViewById(R.id.button2);
+        b2.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					switch (ch) {
+						case 1:
+							t.setTextColor(Color.RED);
+							break;
+						case 2:
+							t.setTextColor(Color.GREEN);
+							break;
+						case 3:
+							t.setTextColor(Color.BLUE);
+							break;
+						case 4:
+							t.setTextColor(Color.CYAN);
+							break;
+						case 5:
+							t.setTextColor(Color.YELLOW);
+							break;
+						case 6:
+							t.setTextColor(Color.MAGENTA);
+							break;
+					}
+					ch++;
+					if (ch == 7)
+						ch = 1;
+				}
+			});
+    }
+}
+
+final TextView t= (TextView) findViewById(R.id.textView);
+		Button b1= (Button) findViewById(R.id.button1);
+        b1.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					t.setTextSize(font);
+					font = font + 5;
+					if (font == 50)
+						font = 30;
+				}
+			});
+        Button b2= (Button) findViewById(R.id.button2);
+        b2.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					switch (ch) {
+						case 1:
+							t.setTextColor(Color.RED);
+							break;
+						case 2:
+							t.setTextColor(Color.GREEN);
+							break;
+						case 3:
+							t.setTextColor(Color.BLUE);
+							break;
+						case 4:
+							t.setTextColor(Color.CYAN);
+							break;
+						case 5:
+							t.setTextColor(Color.YELLOW);
+							break;
+						case 6:
+							t.setTextColor(Color.MAGENTA);
+							break;
+					}
+					ch++;
+					if (ch == 7)
+						ch = 1;
+				}
+			});
+    }
+
+
+
+
+
+
+
+
+Q4).Construct image switcher using setFactor
+
+1).MainActivity.java
+package com.example.sairamkrishna.myapplication;
+
+import android.app.Activity;
+import android.app.ActionBar.LayoutParams;
+import android.os.Bundle;
+import android.view.View;
+
+import android.widget.Button;
+import android.widget.ImageSwitcher;
+import android.widget.ImageView;
+import android.widget.Toast;
+import android.widget.ViewSwitcher.ViewFactory;
+
+public class MainActivity extends Activity {
+   private ImageSwitcher sw;
+   private Button b1,b2;
+
+   @Override
+   protected void onCreate(Bundle savedInstanceState) {
+      super.onCreate(savedInstanceState);
+      setContentView(R.layout.activity_main);
+
+      b1 = (Button) findViewById(R.id.button);
+      b2 = (Button) findViewById(R.id.button2);
+
+      sw = (ImageSwitcher) findViewById(R.id.imageSwitcher);
+      sw.setFactory(new ViewFactory() {
+         @Override
+         public View makeView() {
+            ImageView myView = new ImageView(getApplicationContext());
+            myView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            myView.setLayoutParams(new 
+               ImageSwitcher.LayoutParams(LayoutParams.WRAP_CONTENT,
+                  LayoutParams.WRAP_CONTENT));
+            return myView;
+         }
+      });
+
+      b1.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View v) {
+            Toast.makeText(getApplicationContext(), "previous Image",
+               Toast.LENGTH_LONG).show();
+            sw.setImageResource(R.drawable.abc);
+         }
+      });
+
+      b2.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View v) {
+            Toast.makeText(getApplicationContext(), "Next Image",
+               Toast.LENGTH_LONG).show();
+            sw.setImageResource(R.drawable.tp);
+         }
+      });
+   }
+}
+
+2).ActivityMain.xml
+i).Following is the modified content of the xml res/layout/activity_main.xml.
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout 
+   xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:tools="http://schemas.android.com/tools" 
+   android:layout_width="match_parent"
+   android:layout_height="match_parent" 
+   android:paddingLeft="@dimen/activity_horizontal_margin"
+   android:paddingRight="@dimen/activity_horizontal_margin"
+   android:paddingTop="@dimen/activity_vertical_margin"
+   android:paddingBottom="@dimen/activity_vertical_margin" 
+   tools:context=".MainActivity">
+      
+   <TextView android:text="Gestures  Example" 
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/textview"
+      android:textSize="35dp"
+      android:layout_alignParentTop="true"
+      android:layout_centerHorizontal="true" />
+      
+   <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Tutorials point"
+      android:id="@+id/textView"
+      android:layout_below="@+id/textview"
+      android:layout_centerHorizontal="true"
+      android:textColor="#ff7aff24"
+      android:textSize="35dp" />
+      
+   <ImageSwitcher
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/imageSwitcher"
+      android:layout_below="@+id/textView"
+      android:layout_centerHorizontal="true"
+      android:layout_marginTop="168dp" />
+      
+   <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/left"
+        android:id="@+id/button"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true" />
+
+   <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/right"
+        android:id="@+id/button2"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/button"
+        android:layout_alignStart="@+id/button" />
+      
+</RelativeLayout>
+
+
+ii).Following is the content of Strings.xml file.
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="left"><![CDATA[<]]></string>
+    <string name="right"><![CDATA[>]]></string>
+</resources>
+
+Following is the content of AndroidManifest.xml file.
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+   package="com.example.sairamkrishna.myapplication"
+
+   <application
+      android:allowBackup="true"
+      android:icon="@drawable/ic_launcher"
+      android:label="@string/app_name"
+      android:theme="@style/AppTheme" >
+      
+      <activity
+         android:name="com.example.sairamkrishna.myapplication.MainActivity"
+         android:label="@string/app_name" >
+         
+         <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+         </intent-filter>
+         
+      </activity>
+      
+   </application>
+</manifest>
+  
+
+
+
+
+
+
+
+
+Q5).Java Andriod prog to demostrate the Alert Dialuage Box.
+
+1).activity_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout 
+xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:app="http://schemas.android.com/apk/res-auto"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ tools:context=".MainActivity">
+ <Button
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:id="@+id/button"
+ android:text="Close app"
+ app:layout_constraintBottom_toBottomOf="parent"
+ app:layout_constraintLeft_toLeftOf="parent"
+ app:layout_constraintRight_toRightOf="parent"
+ app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+2).MainActivity.java
+
+package com.example.alertbox;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+public class MainActivity extends AppCompatActivity
+{
+ Button closeButton;
+ AlertDialog.Builder builder;
+ @Override
+ protected void onCreate(Bundle savedInstanceState)
+ {
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ closeButton = (Button)findViewById(R.id.button);
+ builder = new AlertDialog.Builder(this);
+ closeButton.setOnClickListener(new View.OnClickListener()
+ {
+ @Override
+ public void onClick(View v)
+ {
+ 
+builder.setMessage(R.string.dialog_message).setTitle(R.string.dialog_title);
+ builder.setMessage("Do you want to close this application ?")
+ .setCancelable(false)
+.setPositiveButton("Yes", new
+ DialogInterface.OnClickListener()
+ {
+ public void onClick(DialogInterface dialog, 
+int id)
+ {
+ //Action for "Yes" Button
+finish();
+Toast.makeText(getApplicationContext(),"You choose yes action for 
+AlertBox",Toast.LENGTH_SHORT).show();
+ }
+ })
+.setNegativeButton("No", new
+ DialogInterface.OnClickListener()
+{
+ public void onClick(DialogInterface dialog, 
+int id)
+ {
+ //Action for "No" Button
+dialog.cancel();
+Toast.makeText(getApplicationContext(),"You choose no action for 
+AlertBox",Toast.LENGTH_SHORT).show();
+ }
+ });
+ //Creating Dialog Box
+ AlertDialog alert = builder.create();
+ alert.setTitle("Alert Message");
+ alert.show();
+ }
+ });
+ }
+}
+String.xml
+<resources>
+ <string name="app_name">AlertBox</string>
+ <string name="dialog_message">Welcome to Alert Dialog</string>
+ <string name="dialog_title">Shubham Alert Dialog</string>
+</resources>
+AndroidManifest.xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+ package="com.example.alertbox">
+ <application
+ android:allowBackup="true"
+ android:icon="@mipmap/ic_launcher"
+ android:label="@string/app_name"
+ android:roundIcon="@mipmap/ic_launcher_round"
+ android:supportsRtl="true"
+ android:theme="@style/AppTheme">
+ <activity android:name=".MainActivity">
+ <intent-filter>
+ <action android:name="android.intent.action.MAIN" />
+ <category android:name="android.intent.category.LAUNCHER" />
+ </intent-filter>
+ </activity>
+ </application>
+</manifest>
+
+ 
+
+
+
+
+
+
+
+Q6Java Android Program to demonstrate login form with validation.
+
+......XML code........
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1f9"
+    tools:context=".LoginMainActivity" >
+
+    <EditText
+        android:id="@+id/txtuname"
+        android:layout_width="250sp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="97dp"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="text|textEmailAddress|textPersonName" />
+
+    <EditText
+        android:id="@+id/txtpswd"
+        android:layout_width="250sp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txtuname"
+        android:layout_below="@+id/txtuname"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/btnlogin"
+        android:layout_width="250sp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txtpswd"
+        android:layout_below="@+id/txtpswd"
+        android:layout_marginTop="46dp"
+        android:text="Login"
+        android:textColorHint="#1f9" />
+
+</RelativeLayout>
+
+
+.......java code...........
+
+package com.mycompany.myapp;
+
+import android.app.*;
+import android.os.*;
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.EditText;
+import android.widget.*;
+
+import java.util.*;
+
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+public class MainActivity extends Activity 
+{
+	EditText username;
+	EditText password;
+	Button  login;
+	
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+  {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+		username=(EditText) findViewById(R.id.txtuname); 
+		password=(EditText) findViewById(R.id.txtpswd); 
+		login=(Button) findViewById(R.id.btnlogin);
+		login.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+
+					if(!isValidEmail(username.getText().toString())) {
+						username.setError("Invalid Email");
+
+					}
+
+					//final String password = password.getText().toString();
+					if (!isValidPassword(password.getText().toString())) {
+						password.setError("Invalid Password");
+
+					} 
+					else
+						Toast.makeText(getApplicationContext()," RESULT_OK", Toast.LENGTH_SHORT).show();
+					//Toast.makeText(getApplicationContext(), "Sucssefully Login...",Toast.LENGTH_SHORT).show();
+					/*if(username.getText().toString().equals("sai@gmail.com")  && password.getText().toString().equals("sai123") )
+					 {
+
+					 Toast.makeText(getApplicationContext(), "Sucssefully Login...",Toast.LENGTH_SHORT).show();
+					 }
+					 else{
+					 Toast.makeText(getApplicationContext(), "Login Failse",Toast.LENGTH_SHORT).show();
+					 }*/
+
+					 }
+				
+			});
+	}
+    private boolean isValidEmail(String email) {
+		String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+		Matcher matcher = pattern.matcher(email);
+		return matcher.matches();
+	}
+
+
+
+	private boolean isValidPassword(String pass) {
+		if (pass != null && pass.length() > 6) {
+			return true;
+		}
+		return false;
+    }
+}
+
+
+
+
+
+
+
+
+Q.7) Create an application that allows the user to enter a number in the textbox named ‘getnum’.
+ Check whether the number in the textbox ‘getnum’ is palindrome or not. 
+Print the message accordingly in the label control named lbldisplay when the user clicks on the button ‘check’.
+    
+ 1)activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#9C27B0"
+    android:orientation="vertical"
+    android:textAlignment="center"
+    tools:ignore="ExtraText">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Palindrome"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="40dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="Enter Number"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/getnum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="5dp"
+        android:ems="10"
+        android:inputType="number"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/check"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="50dp"
+        android:text="Check" />
+
+    <TextView
+        android:id="@+id/lbldisplay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text=""
+        android:textColor="#FFFFFF"
+        android:textAlignment="center"
+        android:textSize="30dp" />
+</LinearLayout>
+
+
+
+2 ) MainActivity.java
+package com.example.palindrome;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+public class MainActivity extends AppCompatActivity
+{   EditText getnum  ;
+    TextView lbldisplay;
+    Button check;
+    String c,d;
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        getnum=(EditText)findViewById(R.id.getnum);
+        check=(Button)findViewById(R.id.check);
+        lbldisplay=(TextView)findViewById(R.id.lbldisplay);
+        check.setOnClickListener(new View.OnClickListener()
+        {
+
+            public void onClick(View v)
+            {
+                c=getnum.getText().toString();
+                d= new StringBuilder(c).reverse().toString();
+                if((c.equals(d))  )
+                {
+                    lbldisplay.setText("Palindrome");
+                }
+                else
+                {
+                    lbldisplay.setText(" Not Palindrome");
+                }
+            }
+        });
+
+    }
+}
+
+
+
+
+
+
+
+
+Q8).Digital Clock
+
+1).mainActivity.xml
+
+ <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context=".MainActivity">
+
+
+<AnalogClock
+
+	android:layout_marginTop="20dp"
+	android:layout_marginLeft="120dp"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content" />
+	<DigitalClock
+
+		android:layout_marginLeft="140dp"
+		android:textSize="25dp"
+		android:layout_marginTop="300dp"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" />
+
+
+</RelativeLayout>
+
+2).MainActivity.java
+
+package org.geeksforgeeks.navedmalik.analogdigital;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+
+public class MainActivity extends AppCompatActivity {
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+Q9.SMS
+
+1).activity_main.xml
+<RelativeLayout xmlns:androclass="http://schemas.android.com/apk/res/android"  
+    xmlns:tools="http://schemas.android.com/tools"  
+    android:layout_width="match_parent"  
+    android:layout_height="match_parent"  
+    tools:context=".MainActivity" >  
+  
+    <EditText  
+        android:id="@+id/editText1"  
+        android:layout_width="wrap_content"  
+        android:layout_height="wrap_content"  
+        android:layout_alignParentRight="true"  
+        android:layout_alignParentTop="true"  
+        android:layout_marginRight="20dp"  
+        android:ems="10" />  
+  
+    <EditText  
+        android:id="@+id/editText2"  
+        android:layout_width="wrap_content"  
+        android:layout_height="wrap_content"  
+        android:layout_alignLeft="@+id/editText1"  
+        android:layout_below="@+id/editText1"  
+        android:layout_marginTop="26dp"  
+        android:ems="10"  
+        android:inputType="textMultiLine" />  
+  
+    <TextView  
+        android:id="@+id/textView1"  
+        android:layout_width="wrap_content"  
+        android:layout_height="wrap_content"  
+        android:layout_alignBaseline="@+id/editText1"  
+        android:layout_alignBottom="@+id/editText1"  
+        android:layout_toLeftOf="@+id/editText1"  
+        android:text="Mobile No:" />  
+  
+    <TextView  
+        android:id="@+id/textView2"  
+        android:layout_width="wrap_content"  
+        android:layout_height="wrap_content"  
+        android:layout_alignBaseline="@+id/editText2"  
+        android:layout_alignBottom="@+id/editText2"  
+        android:layout_alignLeft="@+id/textView1"  
+        android:text="Message:" />  
+  
+    <Button  
+        android:id="@+id/button1"  
+        android:layout_width="wrap_content"  
+        android:layout_height="wrap_content"  
+        android:layout_alignLeft="@+id/editText2"  
+        android:layout_below="@+id/editText2"  
+        android:layout_marginLeft="34dp"  
+        android:layout_marginTop="48dp"  
+        android:text="Send SMS" />    
+</RelativeLayout>  
+
+
+2).Android-Manifest.xml
+
+<?xml version="1.0" encoding="utf-8"?>  
+<manifest   
+xmlns:androclass="http://schemas.android.com/apk/res/android"  
+    package="com.example.sendsms"  
+    android:versionCode="1"  
+    android:versionName="1.0" >  
+  
+    <uses-sdk  
+        android:minSdkVersion="8"  
+        android:targetSdkVersion="16" />  
+  
+    <uses-permission android:name="android.permission.SEND_SMS"/>  
+    
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>  
+  
+    <application  
+        android:allowBackup="true"  
+        android:icon="@drawable/ic_launcher"  
+        android:label="@string/app_name"  
+        android:theme="@style/AppTheme" >  
+        <activity  
+            android:name="com.example.sendsms.MainActivity"  
+            android:label="@string/app_name" >  
+            <intent-filter>  
+                <action android:name="android.intent.action.MAIN" />  
+  
+                <category android:name="android.intent.category.LAUNCHER" />  
+            </intent-filter>  
+        </activity>  
+    </application>  
+  
+</manifest>  
+
+
+MainActivity.java
+package com.example.sendsms;  
+  
+import android.os.Bundle;  
+import android.app.Activity;  
+import android.app.PendingIntent;  
+import android.content.Intent;  
+import android.telephony.SmsManager;  
+import android.view.Menu;  
+import android.view.View;  
+import android.view.View.OnClickListener;  
+import android.widget.Button;  
+import android.widget.EditText;  
+import android.widget.Toast;  
+  
+public class MainActivity extends Activity {  
+  
+    EditText mobileno,message;  
+    Button sendsms;  
+    @Override  
+    protected void onCreate(Bundle savedInstanceState) {  
+        super.onCreate(savedInstanceState);  
+        setContentView(R.layout.activity_main);  
+          
+        mobileno=(EditText)findViewById(R.id.editText1);  
+        message=(EditText)findViewById(R.id.editText2);  
+        sendsms=(Button)findViewById(R.id.button1);  
+          
+    //Performing action on button click  
+        sendsms.setOnClickListener(new OnClickListener() {  
+              
+            @Override  
+            public void onClick(View arg0) {  
+                String no=mobileno.getText().toString();  
+                String msg=message.getText().toString();  
+                  
+                //Getting intent and PendingIntent instance  
+                Intent intent=new Intent(getApplicationContext(),MainActivity.class);  
+                PendingIntent pi=PendingIntent.getActivity(getApplicationContext(), 0, intent,0);  
+                  
+                //Get the SmsManager instance and call the sendTextMessage method to send message  
+                SmsManager sms=SmsManager.getDefault();  
+                sms.sendTextMessage(no, null, msg, pi,null);  
+                  
+                Toast.makeText(getApplicationContext(), "Message Sent successfully!",  
+                    Toast.LENGTH_LONG).show();  
+            }  
+        });  
+    }  
+  
+    @Override  
+    public boolean onCreateOptionsMenu(Menu menu) {  
+        // Inflate the menu; this adds items to the action bar if it is present.  
+        getMenuInflater().inflate(R.menu.activity_main, menu);  
+        return true;  
+    }  
+      
+}
+
+
+
+
+
+
+
+
+
+Q10).Intent hello msg from one activity to other activity.
+
+1).activity_main.xml file
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context=".first_activity">
+
+	<EditText
+		android:id="@+id/send_text_id"
+		android:layout_width="300dp"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="40dp"
+		android:layout_marginTop="20dp"
+		android:hint="Input"
+		android:textSize="25dp"
+		android:textStyle="bold" />
+
+	<Button
+		android:id="@+id/send_button_id"
+		android:layout_width="wrap_content"
+		android:layout_height="40dp"
+		android:layout_marginLeft="150dp"
+		android:layout_marginTop="150dp"
+		android:text="send"
+		android:textStyle="bold" />
+</RelativeLayout>
+
+2).MainActivity.android File
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class first_activity extends AppCompatActivity {
+
+	// define the variable
+	Button send_button;
+	EditText send_text;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_first_activity);
+		
+		send_button = findViewById(R.id.send_button_id);
+		send_text = findViewById(R.id.send_text_id);
+
+		// add the OnClickListener in sender button after clicked this button following Instruction will run
+		send_button.setOnClickListener(v -> {
+			// get the value which input by user in EditText and convert it to string
+			String str = send_text.getText().toString();
+			// Create the Intent object of this class Context() to Second_activity class
+			Intent intent = new Intent(getApplicationContext(), Second_activity.class);
+			// now by putExtra method put the value in key, value pair key is
+			// message_key by this key we will receive the value, and put the string
+			intent.putExtra("message_key", str);
+			// start the Intent
+			startActivity(intent);
+		});
+	}
+}
+
+
+
+
+
+
+
+
+Q11.Change image display on the screen.
+
+1.activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ xmlns:tools="http://schemas.android.com/tools"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ android:paddingBottom="10dp"
+ android:paddingLeft="10dp"
+ android:paddingRight="10dp"
+ android:paddingTop="10dp"
+ tools:context=".MainActivity" >
+ <LinearLayout
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:orientation="horizontal"
+ android:paddingBottom="40px"
+ android:weightSum="2" >
+ <RadioGroup
+ android:id="@+id/rg1"
+ android:layout_width="wrap_content"
+ android:layout_height="match_parent"
+ android:layout_weight="1"
+ android:orientation="vertical" >
+ <RadioButton
+ android:id="@+id/radioButton1"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_alignParentRight="true"
+ android:layout_alignParentTop="true"
+ android:layout_marginTop="20dp"
+ android:text="Image1" />
+ <RadioButton
+ android:id="@+id/radioButton2"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_alignBaseline="@+id/radioButton1"
+ android:layout_alignBottom="@+id/radioButton1"
+ android:layout_alignParentLeft="true"
+ android:text="Image2" />
+ </RadioGroup>
+ <RadioGroup
+ android:id="@+id/rg2"
+ android:layout_width="wrap_content"
+ android:layout_height="match_parent"
+ android:layout_weight="1"
+ android:orientation="vertical" >
+ <RadioButton
+ android:id="@+id/radioButton3"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_marginTop="30dp"
+ android:text="Image3" />
+ <RadioButton
+ android:id="@+id/radioButton4"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_alignBaseline="@+id/radioButton3"
+ android:layout_alignBottom="@+id/radioButton3"
+ android:layout_alignParentRight="true"
+ android:text="Image4" />
+ </RadioGroup>
+ </LinearLayout>
+ <ImageView
+ android:id="@+id/imageView1"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+ android:layout_alignParentBottom="true"
+ android:layout_alignParentRight="true"
+ android:layout_marginTop="50dp"
+ android:src="@drawable/ic_launcher" />
+</RelativeLayout>
+
+2).MainActivity.java
+
+package com.example.imagechange;
+import android.app.Activity;
+import android.graphics.Typeface;
+import android.os.Bundle;
+import android.renderscript.Type;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.TextView;
+public class MainActivity extends Activity implements OnCheckedChangeListener
+{
+ RadioGroup group1, group2;
+ Button gen;
+ ImageView img;
+ @Override
+ protected void onCreate(Bundle savedInstanceState)
+ {
+ // TODO Auto-generated method stub
+ super.onCreate(savedInstanceState);
+ setContentView(R.layout.activity_main);
+ group1 = (RadioGroup) findViewById(R.id.rg1);
+ group1.setOnCheckedChangeListener((OnCheckedChangeListener) this);
+ group2 = (RadioGroup) findViewById(R.id.rg2);
+ group2.setOnCheckedChangeListener((OnCheckedChangeListener) this);
+ img = (ImageView) findViewById(R.id.imageView1);
+ // oncheckedChanged function
+ }
+ @Override
+ public void onCheckedChanged(RadioGroup group, int checkedId)
+ {
+ // TODO Auto-generated method stub
+ switch (checkedId)
+ {
+ case R.id.radioButton1:
+ img.setImageResource(R.drawable.image4);
+ break;
+ case R.id.radioButton2:
+ img.setImageResource(R.drawable.image5);
+ break;
+ case R.id.radioButton3:
+ img.setImageResource(R.drawable.image6);
+ break;
+ case R.id.radioButton4:
+ img.setImageResource(R.drawable.image7);
+ break;
+ default:
+ break;
+ }
+ }
+}
+AndroidManifest.xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+ package="com.example.imagechange">
+ <application
+ android:allowBackup="true"
+ android:label="@string/app_name"
+ android:roundIcon="@mipmap/ic_launcher_round"
+ android:supportsRtl="true"
+ android:theme="@style/AppTheme">
+ <activity android:name=".MainActivity">
+ <intent-filter>
+ <action android:name="android.intent.action.MAIN" />
+ <category android:name="android.intent.category.LAUNCHER" />
+ </intent-filter>
+ </activity>
+ </application>
+</manifest>
+
+
+
+
+
+
+
+
+
+12).Menu Application.(popup menu)
+
+1)mainactivity.xml
+
+<ImageButton
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/ic_overflow_holo_dark"
+    android:contentDescription="@string/descr_overflow_button"
+    android:onClick="showPopup" />
+
+2).
+public void showPopup(View v) {
+    PopupMenu popup = new PopupMenu(this, v);
+    MenuInflater inflater = popup.getMenuInflater();
+    inflater.inflate(R.menu.actions, popup.getMenu());
+    popup.show();
+}
+
+3).
+public void showMenu(View v) {
+    PopupMenu popup = new PopupMenu(this, v);
+
+    // This activity implements OnMenuItemClickListener
+    popup.setOnMenuItemClickListener(this);
+    popup.inflate(R.menu.actions);
+    popup.show();
+}
+
+@Override
+public boolean onMenuItemClick(MenuItem item) {
+    switch (item.getItemId()) {
+        case R.id.archive:
+            archive(item);
+            return true;
+        case R.id.delete:
+            delete(item);
+            return true;
+        default:
+            return false;
+    }
+}
+
+
+
+

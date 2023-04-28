@@ -1,0 +1,814 @@
+Q1. C program to demonstrate working of getrlimit()
+
+// and setlimit()
+#include <stdio.h>
+#include <sys/resource.h>
+#include <string.h>
+#include <errno.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+int main() {
+struct rlimit old_lim, lim, new_lim;
+// Get old limits
+if( getrlimit(RLIMIT_NOFILE, &old_lim) == 0)
+printf("Old limits -> soft limit= %ld \t" " hard limit= %ld \n", old_lim.rlim_cur,old_lim.rlim_max);
+else
+fprintf(stderr, "%s\n", strerror(errno));
+// Set new value
+lim.rlim_cur = 3;
+lim.rlim_max = 1024;
+// Set limits
+if(setrlimit(RLIMIT_NOFILE, &lim) == -1)fprintf(stderr, "%s\n", strerror(errno));
+// Get new limits
+if( getrlimit(RLIMIT_NOFILE, &new_lim) == 0)
+printf("New limits -> soft limit= %ld " "\t hard limit= %ld \n", new_lim.rlim_cur,new_lim.rlim_max);
+else
+fprintf(stderr, "%s\n", strerror(errno));
+return 0;
+}
+
+/*
+bcslinux36:~/Desktop/AOS # gcc prog12.c
+bcslinux36:~/Desktop/AOS # ./a.out 
+Old limits -> soft limit= 1024 	 hard limit= 4096 
+New limits -> soft limit= 3 	 hard limit= 1024 
+*/
+
+
+
+
+
+
+
+
+
+Q2.Write a C program to display as well as resets the environment variable such as path, home, root
+
+#include <stdlib.h>
+#include <string.h>
+int main() {
+char *oldenv = strdup(getenv("PATH")); // Make a copy of your PATH
+setenv("PATH", "hello", 1); // Overwrite it
+system("echo $PATH\n"); // Outputs "hello"
+setenv("PATH", oldenv, 1); // Restore old PATH
+free(oldenv); // Don't forget to free!
+system("echo PATH =$PATH\n"); // Outputs your actual PATH
+}
+
+/*
+bcslinux36:~/Desktop/AOS # gcc prog11.c
+bcslinux36:~/Desktop/AOS # ./a.out 
+hello
+PATH =/sbin:/usr/sbin:/usr/local/sbin:/root/bin:/usr/local/bin:/usr/bin:/bin
+bcslinux36:~/Desktop/AOS */
+
+
+
+
+
+
+
+
+
+Q3. Write a C program that redirects standard output to a file output.txt. (use of dup and open
+system call).*/
+
+#include<stdio.h>
+#include <unistd.h>
+#include <fcntl.h>
+int main()
+{
+// open() returns a file descriptor file_desc to a
+// the file "dup.txt" here"
+int file_desc = open("dup.txt", O_WRONLY | O_APPEND);
+if(file_desc < 0)
+printf("Error opening the file\n");
+// dup() will create the copy of file_desc as the copy_desc
+// then both can be used interchangeably.
+int copy_desc = dup(file_desc);
+// write() will write the given string into the file
+// referred by the file descriptors
+write(copy_desc,"This will be output to the file named dup.txt\n", 46);
+write(file_desc,"This will also be output to the file named dup.txt\n", 51);
+return 0; }
+
+/*
+dup.txt
+aaaa
+bbbb
+
+bcslinux36:~/Desktop/AOS # gcc prog13.c
+bcslinux36:~/Desktop/AOS # ./a.out 
+
+dup.txt
+aaaa
+bbbb
+This will be output to the file named dup.txt
+This will also be output to the file named dup.txt*/
+
+
+
+
+
+
+
+
+
+Q4.To generate parent process to write unnamed pipe & will read from it.
+ 
+
+#include<stdio.h>
+#include<unistd.h>
+int main()
+{
+int pipefds[2];
+int pid;
+int returnstatus;
+char writemessages[2][20]={"Hi","Hello"};
+char readmessage[20];
+returnstatus=pipe(pipefds);
+if(returnstatus==-1){
+printf("Unable to create pipe\n");
+return 1;
+}
+printf("Writing to pipe-Message1 is %s\n",writemessages[0]);
+write(pipefds[1],writemessages[0],sizeof(writemessages[0]));
+read(pipefds[0],readmessage,sizeof(readmessage));
+printf("Reading from pipeâ€“Message1 is %s\n",readmessage);
+printf("Writing to pipe-Message2 is %s\n",writemessages[1]);
+write(pipefds[1],writemessages[1],sizeof(writemessages[1]));
+read(pipefds[0],readmessage,sizeof(readmessage));
+printf("Reading from pipeâ€“Message2 is %s\n",readmessage);
+return 0;
+}
+
+bcs@localhost:~/Desktop/AOSProgs> gcc prog2.c
+bcs@localhost:~/Desktop/AOSProgs> ./a.out
+Writing to pipe-Message1 is Hi
+Reading from pipeâ€“Message1 is Hi
+Writing to pipe-Message2 is Hello
+Reading from pipeâ€“Message2 is Hello
+bcs@localhost:~/Desktop/AOSProgs> ^C
+bcs@localhost:~/Desktop/AOSProgs>
+
+
+
+
+
+
+
+
+
+
+
+Q.5 To create a file with hole in it.
+#include<fcntl.h>
+#include<stdio.h>
+#include<errno.h>
+#include<unistd.h>
+#include<sys/stat.h>
+#include<string.h>
+int main()
+{
+int fd;
+char name[20]="HarryPotter";
+//Creating a file
+if((fd=open("book.txt",O_RDWR|O_CREAT,S_IWRITE|S_IREAD)<0))
+   printf("\ncreate error");
+
+//Seeking 100th byte,from the begining of the file
+if(lseek(fd,100,SEEK_SET)==-1){
+if(errno!=0){
+perror("lseek");
+}
+}
+//Writing to the 100th byte,there by creating a hole
+if(write(fd,name,sizeof(char)*strlen(name))!=sizeof(char)*strlen(name)){
+if(errno!=0){
+   perror("write");
+}
+}
+//closing the file
+if(close(fd)==-1)
+{
+if(errno!=0)
+   perror("close");
+}
+return 0;
+}
+
+bcs@localhost:~/Desktop/AOSProgs> gcc prog3.c
+bcs@localhost:~/Desktop/AOSProgs> ./a.out
+lseek: Illegal seek
+HarryPotterbcs@localhost:~/Desktop/AOSProgs> 
+
+
+
+
+
+
+
+
+
+
+Q6.To demostrate the use of atexit() function
+
+#include <stdio.h>
+#include <stdlib.h>
+void out (void)
+{
+printf ("atexit() succeeded!\n");
+}
+int main (void)
+{
+if (atexit (out))
+fprintf(stderr, "atexit() failed!\n");
+return 0;
+}
+
+/*
+shubham@shubham:~/Documents/C Programs$ gcc 7atexit.c -o test
+shubham@shubham:~/Documents/C Programs$ ./test
+atexit() succeeded!
+*/
+
+
+
+
+
+
+
+
+
+
+Q7.Write a C program to create â€˜nâ€™ children. When the children will terminate,
+display total cumulative time children spent in user and kernel mode 7*/
+
+#include<sys/types.h>
+#include<sys/wait.h>
+#include<unistd.h>
+#include<time.h>
+#include<sys/times.h>
+#include<stdio.h>
+#include<stdlib.h>
+int main(void)
+{
+int i, status;
+ pid_t pid;
+ time_t currentTime;
+struct tms cpuTime;
+if((pid = fork())==-1) //start child process
+ {
+ perror("\nfork error");
+ exit(EXIT_FAILURE);
+ }
+else if(pid==0) //child process
+ {
+ time(&currentTime);
+ printf("\nChild process started at %s",ctime(&currentTime));
+ for(i=0;i<5;i++)
+ {
+ printf("\nCounting= %dn",i); //count for 5 seconds
+ sleep(1);
+ }
+ time(&currentTime);
+ printf("\nChild process ended at %s",ctime(&currentTime));
+ exit(EXIT_SUCCESS);
+ }
+else
+ { //Parent process
+ time(&currentTime); // gives normal time
+ printf("\nParent process started at %s ",ctime(&currentTime));
+ if(wait(&status)== -1) //wait for child process
+ perror("\n wait error");
+ if(WIFEXITED(status))
+ printf("\nChild process ended normally");
+ else
+ printf("\nChild process did not end normally");
+ if(times(&cpuTime)<0) //Get process time
+ perror("\nTimes error");
+ else
+ { // _SC_CLK_TCK: system configuration time: seconds clock tick
+ printf("\nParent process user time= %fn",((double)
+cpuTime.tms_utime));
+ printf("\nParent process system time = %fn",((double)
+cpuTime.tms_stime));
+printf("\nChild process user time = %fn",((double)
+cpuTime.tms_cutime));
+ printf("\nChild process system time = %fn",((double)
+cpuTime.tms_cstime));
+ }
+ time(&currentTime);
+ printf("\nParent process ended at %s",ctime(&currentTime));
+ exit(EXIT_SUCCESS);
+ }
+}
+/* ---------------------------------------------------------------------------------------------------
+OUTPUT (as per system)
+Parent process started at Thu Apr 13 12:41:20 2023
+Child process started at Thu Apr 13 12:41:20 2023
+
+Counting= 0n
+Counting= 1n
+Counting= 2n
+Counting= 3n
+Counting= 4n
+Child process ended at Thu Apr 13 12:41:25 2023
+ 
+Child process ended normally
+Parent process user time= 0.000000n
+Parent process system time = 0.000000n
+Child process user time = 0.000000n
+Child process system time = 0.000000n
+Parent process ended at Thu Apr 13 12:41:25 2023
+bcs@localhost:~/Desktop/AOSProgs> 
+
+*/
+
+
+
+
+
+
+
+
+
+Q8. To print the size of the file.
+
+// C program to find the size of file
+#include <stdio.h>
+
+long int findSize(char file_name[])
+{
+	// opening the file in read mode
+	FILE* fp = fopen(file_name, "r");
+
+	// checking if the file exist or not
+	if (fp == NULL) {
+		printf("File Not Found!\n");
+		return -1;
+	}
+
+	fseek(fp, 0L, SEEK_END);
+
+	// calculating the size of the file
+	long int res = ftell(fp);
+
+	// closing the file
+	fclose(fp);
+
+	return res;
+}
+
+// Driver code
+int main()
+{
+	char file_name[] = { "a.txt" };
+	long int res = findSize(file_name);
+	if (res != -1)
+		printf("Size of the file is %ld bytes \n", res);
+	return 0;
+}
+
+/*
+bcs@localhost:~/Desktop/AOSProgs> gcc prog7.c
+bcs@localhost:~/Desktop/AOSProgs> ./a.out
+Size of the file is 27 bytes 
+bcs@localhost:~/Desktop/AOSProgs>*/
+
+
+
+
+
+
+
+
+Q.9 Write a C prog that behaes like a shell (command interpreter).It has its own prompt "Newshell$".Any normal shell command is executed from
+your shell by starting a child process to execute the system program corresponding to the command.
+
+It should additionlly interpret the following command.
+i)count c- print number of the character in the file.
+ii)count w- print number of words in the file.
+iii)count l- print number of lines in the file. 
+
+* shell.c
+
+* Created on: 
+* Author: root
+*/
+#include<stdio.h>
+#include<string.h>
+#include<sys/types.h>
+#include<sys/wait.h>
+#include<sys/stat.h>
+#include<dirent.h>
+#include<fcntl.h>
+#include<unistd.h>
+#include<stdlib.h>
+char ss[40],tok1[10],tok2[10],tok3[10],tok4[10];
+pid_t pid;
+int fp;
+char ch[1],ch1[100];
+
+void sep()
+{
+ strcpy(tok1,"\0");
+ strcpy(tok2,"\0");
+ strcpy(tok3,"\0");
+ strcpy(tok4,"\0");
+ sscanf(ss,"%s%s%s%s",tok1,tok2,tok3,tok4);
+}
+
+
+void count()
+{
+int cc=0,wc=0,lc=0,j;
+fp=open(tok3,O_RDONLY);
+if(fp==-1)
+printf("error");
+else
+{
+while(read(fp,ch,1)!=0)
+{
+printf("%c",ch[0]);
+if(ch[0]==' ' ||ch[0]=='\n' ||ch[0]=='\t')
+wc++;
+else
+cc++;
+if(ch[0]=='\n')
+lc++;
+}//while
+wc++;lc++;
+close(fp);
+if(strcmp(tok2,"c")==0)
+printf("total number of characters= %d\n",cc);
+else if(strcmp(tok2,"w")==0)
+printf("total number of words= %d\n",wc);
+else if(strcmp(tok2,"l")==0)
+printf("total number of lines= %d\n",lc);
+else if(strcmp(tok2,"cw")==0)
+printf("total number of characters= %d and 
+words=%d\n",cc,wc);
+else if(strcmp(tok2,"cl")==0)
+printf("total number of characters= %d and lines=%d\n",cc,lc);
+else if(strcmp(tok2,"wl")==0)
+printf("total number of words= %d and lines=%d\n",wc,lc);
+else if(strcmp(tok2,"wl")==0)
+printf("total number of words= %d and lines=%d\n",wc,lc);
+else if(strcmp(tok2,"cwl")==0)
+printf("total number of characters= %d,words=%d,lines=%d\n",cc,wc,lc);
+}//else
+}//count
+
+
+void typeline()
+{
+if(strcmp(tok4,"\0")==0)
+{
+int charcount = 0,newlinechar1 = 0,newlinechar2 = 0,newlinechar;
+int ct,count=0;
+fp=open(tok3,O_RDONLY);
+if(fp==-1)
+printf("error");
+else
+{
+if(strcmp(tok2,"a")==0)
+{
+while(read(fp,ch,1))
+printf("%c",ch[0]);
+}//if
+if(strcmp(tok2,"r")==0)
+{
+lseek(fp,0,SEEK_SET);
+while(read(fp,ch,1))
+{
+if(ch[0]=='\n')
+newlinechar1++;
+}//while
+newlinechar2=0;
+while(newlinechar1>=0)
+{
+newlinechar2=0;
+lseek(fp,0,SEEK_SET);
+while(read(fp,ch,1))
+{
+if(ch[0]=='\n')
+newlinechar2++;
+if(newlinechar2==newlinechar1)
+printf("%c",ch[0]);
+}//while
+newlinechar1--;
+if(newlinechar1==0)
+printf("\n");
+}//while
+}//if
+/********** for n>0**********/
+if(atoi(tok2)>0)
+{
+ct=atoi(tok2);
+while(read(fp,ch,1))
+{
+printf("%c",ch[0]);
+if(ch[0]=='\n')
+count++;
+if(ct==count)
+break;
+}//while
+}//if
+/*for n<0*****/
+if(atoi(tok2)<0)
+{
+count=0;
+ct=atoi(tok2);
+while(read(fp,ch,1))
+{
+if(ch[0]=='\n')
+count++;
+}//while
+int c1=count+ct;
+count=0;
+lseek(fp,0,SEEK_SET);
+while(read(fp,ch,1))
+{
+if(ch[0]=='\n')
+count++;
+if(c1<count)
+printf("%c",ch[0]);
+}//while
+}//if
+}//else
+}
+}//typeline
+
+
+void list()
+{
+int i;
+DIR *dp;
+struct dirent *entry;
+struct stat info;
+char pname[40];
+puts(tok1);
+puts(tok2);
+puts(tok3);
+if((dp=opendir(tok3))==NULL)
+printf("Open directory error");
+else
+{
+if(strcmp(tok2,"f")==0)
+{
+while(entry=readdir(dp))
+{
+if((strcmp(entry->d_name,".")==0)||(strcmp(entry-
+>d_name,"..")==0))
+continue;
+strcpy(pname,tok3);
+strcat(pname,"/");
+strcat(pname,entry->d_name);
+if(stat(pname,&info)==0)
+{
+if(S_ISREG(info.st_mode))
+printf("%s\n",entry->d_name);
+}//if
+}//while
+}//if
+else if(strcmp(tok2,"n")==0)
+{
+i=0;
+while(entry=readdir(dp))
+{
+if((strcmp(entry->d_name,".")==0)||(strcmp(entry-
+>d_name,"..")==0))
+continue;
+i++;
+}//while
+printf("Number of entries in the directory = %d",i);
+}//else if
+else if(strcmp(tok2,"i")==0)
+{
+ printf("filename: inode: devid: mode: links: uid: gid: size: created:\n");
+ while(entry=readdir(dp))
+ {
+ if((strcmp(entry->d_name,".")==0) ||(strcmp(entry->d_name,"..")==0))
+ continue;
+ strcpy(pname,tok3);
+ strcat(pname,"/");
+ strcat(pname,entry->d_name);
+ if(stat(pname,&info)!=0)
+ printf("stat error");
+ else
+ {
+ printf("%s",entry->d_name);
+ printf("%d",(int)info.st_ino);
+ printf("%d",(int)info.st_dev);
+ printf("%08x",info.st_mode);
+ printf("%d",info.st_nlink);
+ printf("%d",(int)info.st_uid);
+ printf("%d",(int)info.st_gid);
+ printf("%ld",info.st_size);
+ printf("%s\n",ctime(&info.st_ctim));
+ }//else
+ }//while
+}//else if
+closedir(dp);
+}//else
+}//list
+
+
+int main()
+{
+while(1)
+{
+ printf("\nMyShell $");
+ gets(ss);
+ sep();
+ pid=fork();
+ if(pid==0)
+ {
+ if(strcmp(tok1,"count")==0)
+ count();
+ else if(strcmp(tok1,"typeline")==0)
+ typeline();
+ else if(strcmp(tok1,"list")==0)
+ list();
+ else if(strcmp(tok1,"exit")==0)
+ exit(0);
+ else
+ printf("BAD COMMAND");
+ }//if
+ else
+ if(pid!=0)
+ {
+ waitpid(pid,NULL,0);
+ printf("parent process completed");
+ exit(0);
+ }//if
+}//while
+}//main
+
+
+
+/**********************output******************
+MyShell $count c abc.txt
+aaaaaaaa bbbbbbbbbbbbbbb
+cccccc ddddddddddd
+eeeeeeee
+fffffffffff
+gggggggggggggggtotal number of characters= 74
+MyShell $count w abc.txt
+aaaaaaaa bbbbbbbbbbbbbbb
+cccccc ddddddddddd
+eeeeeeee
+fffffffffff
+gggggggggggggggtotal number of words= 7
+MyShell $count l abc.txt
+aaaaaaaa bbbbbbbbbbbbbbb
+cccccc ddddddddddd
+eeeeeeee
+fffffffffff
+gggggggggggggggtotal number of lines= 5
+MyShell $list f Debug
+list
+f
+Debug
+shell.d
+objects.mk
+shell
+shell.o
+makefile
+subdir.mk
+sources.mk
+MyShell $list n Debug
+list
+n
+Debug
+Number of entries in the directory = 7
+MyShell $list i Debug
+list
+i
+Debug
+filename: inode: devid: mode: links: uid: gid: size: created:
+shell.d51121002054000081a410028Fri Dec 14 23:00:25 2012
+objects.mk51120742054000081a4100230Mon Dec 12 05:34:40 2011
+shell51138382054000081ed10070781Fri Dec 14 23:00:25 2012
+shell.o51128002054000081a410063384Fri Dec 14 23:00:25 2012
+makefile51120732054000081a4100949Sat Dec 15 10:28:36 2012
+subdir.mk51120722054000081a4100646Sat Dec 15 10:28:36 2012
+sources.mk51120702054000081a4100390Sat Dec 15 10:28:36 2012
+MyShell $exit
+parent process completedparent process completedparent process completedparent process 
+completed
+**********************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+Q10.Write a C program to display the given message ‘n’ times. (make a use of setjmp and longjmp
+system call)
+
+// A simple C program to demonstrate working of setjmp() and longjmp()*/
+#include<stdio.h>
+#include<setjmp.h>
+jmp_buf buf;
+void func()
+{
+printf("Welcome to GeeksforGeeks\n");
+// Jump to the point setup by setjmp
+longjmp(buf, 1);
+printf("Geek2\n");
+}
+int main()
+{
+// Setup jump position using buf and return 0
+if (setjmp(buf))
+printf("Geek3\n");
+else
+{
+printf("Geek4\n");
+func();
+}
+return 0;
+}
+/*
+bcslinux36:~/Desktop/AOS # gcc prog13.c
+bcslinux36:~/Desktop/AOS # ./a.out 
+Geek4
+Welcome to GeeksforGeeks
+Geek3
+bcslinux36:~/Desktop/AOS # 
+*/
+
+
+
+
+
+
+
+
+
+
+
+Q11. Write a C Program that demonstrates redirection of standard output to a file.
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+int main(int argc, const char *argv[])
+{
+    int out = open("cout.log", O_RDWR|O_CREAT|O_APPEND, 0600);
+    if (-1 == out) { perror("opening cout.log"); return 255; }
+
+    int err = open("cerr.log", O_RDWR|O_CREAT|O_APPEND, 0600);
+    if (-1 == err) { perror("opening cerr.log"); return 255; }
+
+    int save_out = dup(fileno(stdout));
+    int save_err = dup(fileno(stderr));
+
+    if (-1 == dup2(out, fileno(stdout))) { perror("cannot redirect stdout"); return 255; }
+    if (-1 == dup2(err, fileno(stderr))) { perror("cannot redirect stderr"); return 255; }
+
+    puts("doing an ls or something now");
+
+    fflush(stdout); close(out);
+    fflush(stderr); close(err);
+
+    dup2(save_out, fileno(stdout));
+    dup2(save_err, fileno(stderr));
+
+    close(save_out);
+    close(save_err);
+
+    puts("back to normal output");
+
+    return 0;
+}
+
+/*
+bcs@localhost:~/Desktop/AOSProgs> gcc prog4.c
+bcs@localhost:~/Desktop/AOSProgs> ./a.out
+back to normal output
+bcs@localhost:~/Desktop/AOSProgs> ^C
+*/
+
+
+
+
+
+
+ 
+
+
+
+
+
