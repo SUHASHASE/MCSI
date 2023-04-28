@@ -1,0 +1,103 @@
+   
+ 1)activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#9C27B0"
+    android:orientation="vertical"
+    android:textAlignment="center"
+    tools:ignore="ExtraText">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Palindrome"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="40dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="Enter Number"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/getnum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="5dp"
+        android:ems="10"
+        android:inputType="number"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/check"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="50dp"
+        android:text="Check" />
+
+    <TextView
+        android:id="@+id/lbldisplay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text=""
+        android:textColor="#FFFFFF"
+        android:textAlignment="center"
+        android:textSize="30dp" />
+</LinearLayout>
+
+
+
+2 ) MainActivity.java
+package com.example.palindrome;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+public class MainActivity extends AppCompatActivity
+{   EditText getnum  ;
+    TextView lbldisplay;
+    Button check;
+    String c,d;
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        getnum=(EditText)findViewById(R.id.getnum);
+        check=(Button)findViewById(R.id.check);
+        lbldisplay=(TextView)findViewById(R.id.lbldisplay);
+        check.setOnClickListener(new View.OnClickListener()
+        {
+
+            public void onClick(View v)
+            {
+                c=getnum.getText().toString();
+                d= new StringBuilder(c).reverse().toString();
+                if((c.equals(d))  )
+                {
+                    lbldisplay.setText("Palindrome");
+                }
+                else
+                {
+                    lbldisplay.setText(" Not Palindrome");
+                }
+            }
+        });
+
+    }
+}
+
